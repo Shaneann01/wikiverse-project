@@ -6,7 +6,9 @@ export const Page = (props) => {
   return (
     <>
       <h3>{props.page.title}</h3>
-      <Link to="/Article">{props.page.title}</Link>
+      <Link to="/Article">
+        <button>{props.page.title} Details</button>
+      </Link>
     </>
   );
 };
