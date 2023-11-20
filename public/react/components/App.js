@@ -10,19 +10,33 @@ import apiURL from "../api";
 
 export const App = () => {
   const [pages, setPages] = useState([]);
-
-  async function fetchPages() {
-    try {
-      const response = await fetch(`${apiURL}/wiki`);
-      const pagesData = await response.json();
-      setPages(pagesData);
-    } catch (err) {
-      console.log("Oh no an error! ", err);
-    }
-  }
-
+  const [articles, setArticles] = useState([]);
+  //Page list
   useEffect(() => {
+    async function fetchPages() {
+      try {
+        const response = await fetch(`${apiURL}/wiki`);
+        const pagesData = await response.json();
+        setPages(pagesData);
+      } catch (err) {
+        console.log("Oh no an error! ", err);
+      }
+    }
     fetchPages();
+  }, []);
+
+  //Article detail!
+  useEffect(() => {
+    async function fetchArticle() {
+      try {
+        const response = await fetch(`${apiURL}/wiki`);
+        const articleData = await response.json();
+        setArticles(articleData);
+      } catch (err) {
+        console.log("Oh no an error! ", err);
+      }
+    }
+    fetchArticle();
   }, []);
 
   return (
@@ -32,7 +46,10 @@ export const App = () => {
         <h2>An interesting 📚</h2>
         <Routes>
           <Route path="/" element={<PagesList pages={pages} />} />
-          <Route path="/Article" element={<Article />} />
+          <Route
+            path="/Article/:slug"
+            element={<Article articles={articles} />}
+          />
           <Route path="/Create" element={<CreateArticle />} />
           <Route path="/Delete" element={<DeleteArticle />} />
         </Routes>
